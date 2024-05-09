@@ -58,21 +58,21 @@ export const useSSEStore = defineStore('sse', () => {
     eventSource = new EventSource(sseUrl);
 
     // 处理 SSE 传递的数据
-    eventSource.onmessage = (event) => {
-      const { type, data } = JSON.parse(event.data) as MessageEvent;
-      // 服务器关闭 SSE 连接
-      if (type === 'close') {
-        closeEventSource();
-      }
-      // 当用户的权限及菜单有变更时，重新获取权限及菜单
-      else if (type === 'updatePermsAndMenus') {
-        userStore.fetchPermsAndMenus();
-      }
-      // 在线用户数量变更时
-      else if (type === 'updateOnlineUserCount') {
-        onlineUserCount.value = ~~data;
-        emitter.emit('onlineUser', onlineUserCount.value);
-      }
+    eventSource.onmessage = () => {
+      // const { type, data } = JSON.parse(event.data) as MessageEvent;
+      // // 服务器关闭 SSE 连接
+      // if (type === 'close') {
+      //   closeEventSource();
+      // }
+      // // 当用户的权限及菜单有变更时，重新获取权限及菜单
+      // else if (type === 'updatePermsAndMenus') {
+      //   userStore.fetchPermsAndMenus();
+      // }
+      // // 在线用户数量变更时
+      // else if (type === 'updateOnlineUserCount') {
+      //   onlineUserCount.value = ~~data;
+      //   emitter.emit('onlineUser', onlineUserCount.value);
+      // }
       // console.log('eventSource', event.data);
     };
     eventSource.onerror = (err) => {

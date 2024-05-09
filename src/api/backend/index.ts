@@ -5,7 +5,6 @@
 import * as auth from './auth';
 import * as account from './account';
 import * as captcha from './captcha';
-import * as authEmail from './authEmail';
 import * as systemUser from './systemUser';
 import * as systemRole from './systemRole';
 import * as systemMenu from './systemMenu';
@@ -25,11 +24,11 @@ import * as health from './health';
 import * as netDiskManage from './netDiskManage';
 import * as netDiskOverview from './netDiskOverview';
 import * as businessTodo from './businessTodo';
+import * as service from './service';
 export default {
   auth,
   account,
   captcha,
-  authEmail,
   systemUser,
   systemRole,
   systemMenu,
@@ -49,4 +48,6 @@ export default {
   netDiskManage,
   netDiskOverview,
   businessTodo,
+  // my
+  service,
 };

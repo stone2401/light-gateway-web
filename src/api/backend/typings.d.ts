@@ -1279,4 +1279,48 @@ declare namespace API {
   type UserUpdateParams = {
     id: number;
   };
+
+  type ServiceItemDto = {
+    id: number;
+    serviceName: string;
+    serviceDesc: string;
+    loadType: string;
+    serviceAddr: string;
+    serviceQps: number;
+    totalNode: number;
+    serviceStatus: string;
+  };
+
+  type ServiceItemEntity = {
+    id: number;
+    serviceName: string;
+    serviceDesc: string;
+    loadType: number;
+    serviceAddr: string;
+    qps: number;
+    totalNode: number;
+    serviceStatus: string;
+  };
+  type ServiceListParams = {
+    page?: number;
+    pageSize?: number;
+  };
+  type ServiceDeleteParams = {
+    id: number;
+  };
+
+  type ServiceInfoDao = {
+    type: 0 | 1 | 2;
+    serviceName: string;
+    serviceDesc: string;
+    // service rule
+    ruleType: 0 | 1;
+    rule: string;
+    needHttps: 0 | 1;
+    needWebsocket: 0 | 1;
+    urlRewrite: string;
+    headerTransfor: string;
+    // 负载均衡
+    roundType: 0 | 1 | 2 | 3;
+  };
 }
