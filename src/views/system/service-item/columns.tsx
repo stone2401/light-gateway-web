@@ -18,6 +18,15 @@ const getLoadType = (record) => {
   }
 };
 
+const getStatus = (record) => {
+  switch (record.status) {
+    case 0:
+      return <Tag color="error">关闭</Tag>;
+    case 1:
+      return <Tag color="success">开启</Tag>;
+  }
+};
+
 export const baseColumns: TableColumnItem[] = [
   {
     title: 'ID',
@@ -49,6 +58,12 @@ export const baseColumns: TableColumnItem[] = [
     title: '节点数',
     dataIndex: 'totalNode',
     width: 60,
+  },
+  {
+    title: '状态',
+    dataIndex: 'status',
+    width: 60,
+    customRender: ({ record }) => getStatus(record),
   },
 ];
 

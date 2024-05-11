@@ -8,7 +8,9 @@
     :columns="columns"
   >
     <template #toolbar>
-      <a-button type="primary" @click="openMenuModal({})">新增</a-button>
+      <a-button type="primary" :disabled="!$auth('system:menu:create')" @click="openMenuModal({})"
+        >新增</a-button
+      >
     </template>
   </DynamicTable>
 </template>
@@ -25,7 +27,6 @@
   import { useFormModal } from '@/hooks/useModal';
   import { useServiceSchemas } from './formSchemas';
   const [showModal] = useFormModal();
-
   const [DynamicTable, dynamicTableInstance] = useTable({
     formProps: {
       schemas: searchFormSchema,
@@ -42,24 +43,44 @@
    * @description 打开新增/编辑弹窗
    */
   const openMenuModal = async (record: Partial<TableListItem>) => {
-    const [formRef] = await showModal({
+    let serviceInfo: API.ServiceInfoDao | null = null;
+    if (record.id !== undefined) {
+      serviceInfo = await Api.service.serviceInfo({ id: record.id });
+    }
+    await showModal({
       modalProps: {
         title: `${record.id ? '编辑' : '新增'}服务`,
         width: '50%',
         onFinish: async (values) => {
-          record.id && (values.roleId = record.id);
-          const menusRef = formRef?.compRefMap.get('menuIds')!;
-          const params = {
-            ...values,
-            menuIds: [...menusRef.halfCheckedKeys, ...menusRef.checkedKeys],
-          };
-          console.log('新增/编辑服务', params);
           if (record.id) {
-            // await Api.systemRole.roleUpdate({ id: record.id }, params);
-            console.log('新增/编辑服务', params);
+            console.log('编辑服务', values as API.ServiceInfoDao);
+            switch (values.loadType) {
+              case 0:
+                await Api.service.serviceUpdateHttp(record.id, values);
+                break;
+              case 1:
+                await Api.service.serviceUpdateTcp(record.id, values);
+                break;
+              case 2:
+                await Api.service.serviceUpdateGrpc(record.id, values);
+                break;
+              default:
+                break;
+            }
           } else {
-            // await Api.systemRole.roleCreate(params);
-            console.log('新增/编辑服务', params);
+            switch (values.loadType) {
+              case 0:
+                await Api.service.serviceCreateHttp(values);
+                break;
+              case 1:
+                await Api.service.serviceCreateTcp(values);
+                break;
+              case 2:
+                await Api.service.serviceCreateGrpc(values);
+                break;
+              default:
+                break;
+            }
           }
 
           dynamicTableInstance?.reload();
@@ -67,7 +88,7 @@
       },
       formProps: {
         labelWidth: 100,
-        schemas: useServiceSchemas(record),
+        schemas: useServiceSchemas(serviceInfo),
       },
     });
   };
@@ -109,7 +130,6 @@
           popConfirm: {
             title: '你确定要删除吗？',
             placement: 'left',
-            // onConfirm: () => delRowConfirm(record),
             onConfirm: () => deleteService(record.id),
           },
         },

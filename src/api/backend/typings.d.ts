@@ -1288,7 +1288,7 @@ declare namespace API {
     serviceAddr: string;
     serviceQps: number;
     totalNode: number;
-    serviceStatus: string;
+    status: string;
   };
 
   type ServiceItemEntity = {
@@ -1299,7 +1299,7 @@ declare namespace API {
     serviceAddr: string;
     qps: number;
     totalNode: number;
-    serviceStatus: string;
+    status: string;
   };
   type ServiceListParams = {
     page?: number;
@@ -1310,17 +1310,27 @@ declare namespace API {
   };
 
   type ServiceInfoDao = {
-    type: 0 | 1 | 2;
+    loadType: 0 | 1 | 2;
     serviceName: string;
     serviceDesc: string;
-    // service rule
+    status: number;
+    // service rule http
     ruleType: 0 | 1;
     rule: string;
-    needHttps: 0 | 1;
-    needWebsocket: 0 | 1;
+    needHttps: boolean;
+    needWebsocket: boolean;
     urlRewrite: string;
+    headerTransfor: string;
+    // service rule tcp
+    port: number;
+    // service grpc tcp
     headerTransfor: string;
     // 负载均衡
     roundType: 0 | 1 | 2 | 3;
+    // 黑白名单
+    blacklist: string;
+    whiteList: string;
+    ipList: string;
+    weightList: string;
   };
 }
