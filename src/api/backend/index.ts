@@ -25,6 +25,7 @@ import * as netDiskManage from './netDiskManage';
 import * as netDiskOverview from './netDiskOverview';
 import * as businessTodo from './businessTodo';
 import * as service from './service';
+import * as dashboard from './dashboard';
 export default {
   auth,
   account,
@@ -50,4 +51,5 @@ export default {
   businessTodo,
   // my
   service,
+  dashboard,
 };

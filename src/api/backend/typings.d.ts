@@ -1333,4 +1333,13 @@ declare namespace API {
     ipList: string;
     weightList: string;
   };
+  type ServiceDashboardResponse = {
+    serviceNum: number;
+    currentQps: number;
+    todayRequestNum: number;
+    openService: number;
+    yesterDates: number[];
+    times: number[];
+    datas: number[];
+  };
 }

@@ -69,12 +69,5 @@
     return allDeps[depName].match(/\d+/)?.[0] || '';
   };
 
-  const description = `
-    的前端项目是基于 Vue${getMajorVersion('vue')}.x、
-    Vite${getMajorVersion('vite')}.x、
-    Ant-Design-Vue${getMajorVersion('ant-design-vue')}.x 、
-    TypeScript${getMajorVersion('typescript')}.x 开发，
-    内置了动态路由、权限验证、并提供了常用的功能组件，帮助你快速搭建企业级中后台产品原型。
-    原则上不会限制任何代码用于商用。
-  `;
+  const description = `意在实现网关常用需求，结合项目前端可视化配置项目进行项目管理，减轻网关配置压力。适用与HTTP、HTTPS、WEBSOCKET、TCP、RPC等场景。简单易用，开箱即用。`;
 </script>
