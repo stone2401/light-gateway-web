@@ -47,6 +47,7 @@
   import type { ButtonProps } from '@/components/basic/button';
   import { BasicArrow } from '@/components/basic/basic-arrow';
   import { useI18n } from '@/hooks/useI18n';
+  import { string } from 'vue-types';
 
   type ButtonOptions = Partial<ButtonProps> & { text: string };
 
@@ -90,6 +91,10 @@
       type: Number,
       default: 6,
     },
+    subText: {
+      type: String,
+      default: '',
+    },
     isAdvanced: Boolean,
     hideAdvanceBtn: Boolean,
   });
@@ -119,9 +124,13 @@
   });
 
   const getSubmitBtnOptions = computed(() => {
+    let text = t('common.queryText');
+    if (props.subText != '') {
+      text = props.subText;
+    }
     return Object.assign(
       {
-        text: t('common.queryText'),
+        text: text,
       },
       props.submitButtonOptions,
     );

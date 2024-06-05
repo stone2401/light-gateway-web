@@ -38,18 +38,15 @@
     YAXisOption,
   } from 'echarts/types/dist/shared.js';
   import Api from '@/api';
-  import { da } from '@faker-js/faker';
 
   type ECOption = ComposeOption<
     TitleComponentOption | TooltipComponentOption | XAXisOption | YAXisOption | LineSeriesOption
   >;
 
+  use([CanvasRenderer, TooltipComponent, GridComponent, LineChart]);
   defineOptions({
     name: 'NetDiskOverview',
   });
-
-  use([CanvasRenderer, TooltipComponent, GridComponent, LineChart]);
-
   const loading = ref(false);
   // header
   const serviceNum = ref(0);
@@ -62,7 +59,9 @@
     tooltip: {
       trigger: 'axis',
       formatter: (params) => {
-        return `<div>${params[0].name}号</div><div>${params[0].marker} ${params[0].seriesName}：${params[0].value}MB</div>`;
+        return `
+        <div>${params[0].name}号</div><div>${params[0].marker} ${params[0].seriesName}：${params[0].value}次</div>
+        <div>${params[1].marker} ${params[1].seriesName}：${params[1].value}次</div>`;
       },
     },
     xAxis: {
@@ -129,91 +128,11 @@
       },
     ],
   });
-  const spaceChartOption = ref<ECOption>({
-    tooltip: {
-      trigger: 'axis',
-      formatter: (params) => {
-        return `<div>${params[0].name}号</div><div>${params[0].marker} ${params[0].seriesName}：${params[0].value}MB</div>`;
-      },
-    },
-    xAxis: {
-      type: 'category',
-      boundaryGap: false,
-      axisLine: {
-        show: false,
-      },
-      splitLine: {
-        show: false,
-      },
-      data: [],
-    },
-    yAxis: {
-      type: 'value',
-      axisLabel: { formatter: '{value}MB' },
-      axisLine: {
-        show: false,
-      },
-      axisTick: {
-        show: false,
-      },
-      splitLine: {
-        show: false,
-      },
-    },
-    grid: {
-      show: false,
-      top: '5%',
-      right: '2%',
-      left: '5%',
-      bottom: '8%',
-    },
-    series: [
-      {
-        name: '今日请求数',
-        data: [],
-        type: 'line',
-        smooth: 0.6,
-        areaStyle: {
-          color: '#8cc6f2',
-        },
-        itemStyle: {
-          opacity: 0,
-        },
-        lineStyle: {
-          color: '#8cc6f2',
-        },
-      },
-      {
-        name: '今日请求数2',
-        data: [],
-        type: 'line',
-        smooth: 0.6,
-        areaStyle: {
-          color: '#8cc6f2',
-        },
-        itemStyle: {
-          opacity: 0,
-        },
-        lineStyle: {
-          color: '#8cc6f2',
-        },
-      },
-    ],
-  });
 
   const initData = async () => {
     try {
       showLoading();
-      const data = await Api.dashboard.dashboard();
-      // const data = await Api.netDiskOverview.netDiskOverviewSpace();
-      // const sp = formatSizeUnits(data.spaceSize).split(' ');
-      // spaceSize.value = Number(sp[0]);
-      // spaceUnit.value = sp[1];
-      // fileSize.value = data.fileSize;
-      // const fs = formatSizeUnits(data.flowSize).split(' ');
-      // flowSize.value = Number(fs[0]);
-      // flowUnit.value = fs[1];
-      // hitSize.value = data.hitSize;
+      const data = await Api.dashboard.dashboard(0);
       // @ts-ignore chart
       flowChartOption.value.xAxis!.data = data.times;
       flowChartOption.value.series![0].data = data.datas;
@@ -222,11 +141,6 @@
       dayQps.value = data.todayRequestNum;
       nowQps.value = data.currentQps;
       openService.value = data.openService;
-      // @ts-ignore
-      // spaceChartOption.value.xAxis!.data = data.sizeTrend.times;
-      // spaceChartOption.value.series![0].data = data.sizeTrend.datas.map((e) =>
-      //   (e / 1024 / 1024).toFixed(),
-      // );
     } finally {
       hideLoading();
     }

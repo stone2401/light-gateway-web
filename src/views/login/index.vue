@@ -3,7 +3,7 @@
     <div class="login-logo">
       <!-- <svg-icon name="logo" :size="45" /> -->
       <img src="~@/assets/images/logo.png" width="45" />
-      <h1 class="mb-0 ml-2 text-3xl font-bold">Antdv Admin</h1>
+      <h1 class="mb-0 ml-2 text-3xl font-bold">Light Gateway</h1>
     </div>
     <a-form layout="horizontal" :model="loginFormModel" @submit.prevent="handleSubmit">
       <a-form-item>

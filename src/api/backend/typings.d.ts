@@ -733,6 +733,13 @@ declare namespace API {
     lang: string;
   };
 
+  type UpdatePasswd = {
+    /** 旧密码 */
+    old_password: string;
+    /** 新密码 */
+    new_password: string;
+  };
+
   type RenameDto = {
     /** 文件类型 */
     type: string;

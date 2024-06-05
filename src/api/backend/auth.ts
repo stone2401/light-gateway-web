@@ -25,3 +25,15 @@ export async function authRegister(body: API.RegisterDto, options?: RequestOptio
     ...(options || {}),
   });
 }
+
+// 修改密码
+export async function updatePassword(body: API.UpdatePasswd, options?: RequestOptions) {
+  return request<any>('/api/v1/admin/change_pwd', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}

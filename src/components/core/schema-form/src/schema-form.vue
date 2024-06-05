@@ -63,6 +63,7 @@
 
   // 表单内部状态
   const formState = useFormState({ props, attrs });
+  console.log(formState);
   const {
     formModel,
     getRowConfig,

@@ -8,8 +8,8 @@ export async function serveStat(options?: RequestOptions) {
   });
 }
 
-export async function dashboard(options?: RequestOptions) {
-  return request<API.ServiceDashboardResponse>('/api/v1/dashboard/0', {
+export async function dashboard(id: number, options?: RequestOptions) {
+  return request<API.ServiceDashboardResponse>('/api/v1/dashboard/' + id, {
     method: 'GET',
     ...(options || {}),
   });
